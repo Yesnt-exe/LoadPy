@@ -1,5 +1,6 @@
 cd ../src/Python/
 pyinstaller --onefile --noconsole Engine.py
+mkdir ../../lib/
 mv dist/Engine ../../lib/Engine.elf
 rm dist -r
 rm build -r
