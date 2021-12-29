@@ -32,7 +32,18 @@ int start_process(string pFile){
     if(access(pFile.c_str(), X_OK)){
         return 0; // file cannot be executed
     }
-    int IGNORE = system(string(pFile + " &").c_str());
+    pid_t pForked = fork();
+    if(pForked == -1){
+        return 0;
+    }
+    else if(pForked == 0){
+        if(execl(pFile.c_str(), "", NULL) == -1){
+           exit(1); 
+        }
+    }
+    else{
+        return 1;
+    }
     return 1;
     #else
     return 0;
