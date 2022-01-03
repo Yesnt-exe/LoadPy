@@ -15,8 +15,6 @@ int main(int argc, char* argv[]){
         Yesntlibs::PyInstance python(&engine); 
         int eStatus = engine.valid();
         int pyStatus = python.check_running();
-        python.kill();
-        python.start();
         cout << "Engine status : " << eStatus << "\nInstance status : " << pyStatus << endl;
         if(!eStatus || !pyStatus){
             cout << "Verificaiton failed!" << endl;
