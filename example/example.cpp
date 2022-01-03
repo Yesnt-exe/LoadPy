@@ -6,7 +6,11 @@ using namespace std;
 int main(int argc, char* argv[]){
     try{
         cout << "Starting PyEngine" << endl;
+        #ifdef __unix__
         Yesntlibs::PyEngine engine("../lib/Engine.elf");
+        #else
+        Yesntlibs::PyEngine engine("../lib/Engine.exe");
+        #endif  
         cout << "Establishing communication with engine..." << endl;
         Yesntlibs::PyInstance python(&engine); 
         int eStatus = engine.valid();

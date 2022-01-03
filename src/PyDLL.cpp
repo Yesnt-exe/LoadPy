@@ -7,7 +7,7 @@
 #ifdef __unix__
 #include <unistd.h>
 #else
-
+#include <Windows.h>
 #endif
 
 
@@ -46,7 +46,23 @@ int start_process(string pFile){
     }
     return 1;
     #else
-    return 0;
+    fs::path fPath(pFile);
+    if(!fs::exists(fPath)){
+        return 0;
+    }
+    STARTUPINFOA si;
+    PROCESS_INFORMATION pi;
+    memset(&si, 0, sizeof(si));
+    si.cb = sizeof(si);
+    BOOL result = CreateProcessA(pFile.c_str(), "", NULL, NULL, FALSE, NULL, NULL, NULL, &si, &pi);
+    if(!result){
+        return 0;
+    }
+    else{
+        CloseHandle(pi.hProcess);
+        CloseHandle(pi.hThread);
+        return 1;
+    }
     #endif
 }
 
@@ -107,7 +123,7 @@ void Yesntlibs::PyInstance::start(){
     if(this->check_running()){
         return;
     }
-    int IGNORE = start_process(this->eng->enginepath);
+    int __IGNORE = start_process(this->eng->enginepath);
 }
 
 void Yesntlibs::PyInstance::kill(){
@@ -206,7 +222,7 @@ Yesntlibs::PyModule Yesntlibs::PyInstance::import(string path){
     if(this->eng->channelpath == ""){
         return 0;
     }
-    if(!this->send_command("import", fs::canonical(path))){
+    if(!this->send_command("import", fs::canonical(path).generic_string())){
         return 0;
     }
     auto t1 = chrono::high_resolution_clock::now();

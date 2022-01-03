@@ -1,11 +1,15 @@
+@echo off
+echo Run from build/ directory!
 cd ../src/Python/
 pyinstaller --onefile --noconsole Engine.py
-mkdir ../../lib/
-move dist/Engine ../../lib/Engine.elf
-del dist
-del build
-del __pycache__
+cd ../../
+mkdir lib
+cd src/Python
+move .\dist\Engine.exe ..\..\lib\Engine.exe
+rmdir dist
+rmdir build
+rmdir __pycache__
 del Engine.spec
 cd ..
-g++ PyDLL.cpp -Ofast -c --static -std=c++20 -o ../lib/PyDLL.o
-cd ../build/
+g++ PyDLL.cpp -Ofast -c --static -std=c++2a -o ../lib/PyDLL.o
+cd ../build
