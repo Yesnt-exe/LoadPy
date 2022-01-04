@@ -5,7 +5,7 @@ Load python modules (.py) in C++
 ### Requirements
 [pyinstaller](https://pypi.org/project/pyinstaller/)
 
-[MinGW](https://sourceforge.net/projects/mingw/) (if you use Windows)
+[MinGW](https://sourceforge.net/projects/mingw/)'s g++ (if you are using Windows)
 
 - All the requirements must included in the PATH variable.
 
